@@ -17,3 +17,37 @@ def test_transform_exchange_rates():
   base_codes = [ row[0] == 'CHF' for row in rows ]
   assert reduce(lambda accum, e: accum and e, base_codes, True) == True
   assert reduce(lambda accum, e: accum and e == 5, [ len(row) for row in rows ], True)
+
+
+def test_transformation_binance_tickers():
+  binance_tickers_resp_fixture = """
+    [
+      {
+        "symbol": "ETHBTC",
+        "price": "0.05353600"
+      },
+      {
+        "symbol": "LTCBTC",
+        "price": "0.00182000"
+      },
+      {
+        "symbol": "BNBBTC",
+        "price": "0.00941200"
+      },
+      {
+        "symbol": "NEOBTC",
+        "price": "0.00039900"
+      },
+      {
+        "symbol": "QTUMETH",
+        "price": "0.00220900"
+      }]
+  """
+  mock_json_resp = json.loads(binance_tickers_resp_fixture)
+
+  mock_resp = Mock()
+  mock_resp.json.return_value = mock_json_resp
+  rows = transformations.transform_binance_tickers(mock_resp)
+  assert len(rows) == 5
+  tickers = [ row[0] for row in rows]
+  assert tickers == ['ETHBTC', 'LTCBTC', 'BNBBTC', 'NEOBTC', 'QTUMETH']
