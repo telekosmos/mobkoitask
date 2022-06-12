@@ -14,14 +14,14 @@ def process_etl():
     for strategy in strategies:
       resp = get_api_data(strategy['url'])
       if resp.status_code == 200:
-        print(f"got data {resp.status_code}")
+        print(f"Got data from {strategy['url']}")
         storage_func = strategy['storage_func']
         storage_func(strategy['output_folder'], strategy['output_filename'], resp.text)
-        print("saved to file")
+        print("Saved to file")
         rows = strategy['transform_func'](resp)
-        print(f"converted to rows {len(rows)}")
+        print(f"Transformed to persist {len(rows)} rows")
         strategy['persist_func'](conn, rows)
-        print(f"persisted {len(rows)} rates")
+        print(f"Successfully persisted {len(rows)} rows")
       else:
         print(f'Error on request {strategy["url"]}: {resp.status_code}')
 
