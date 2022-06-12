@@ -13,6 +13,12 @@ def persist_exchange_rates(conn, rows):
       for row in rows:
         cur.execute(stmt, row)
 
-      # conn.commit()
-      # cur.close()
-      # conn.close()
+def persist_binance_tickers(conn, rows):
+  stmt = """
+    INSERT INTO public.binance_tickers (symbol, price)
+    VALUES (%s, %s)
+  """
+  with conn:
+    with conn.cursor() as cur:
+      for row in rows[1:12]:
+        cur.execute(stmt, row)
