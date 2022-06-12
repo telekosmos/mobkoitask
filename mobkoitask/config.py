@@ -22,10 +22,10 @@ binance_etl_config = {
 }
 
 db_config = {
-  'host': 'localhost',
+  'host': 'postgresql',
   'user': 'postgres',
-  'password': 'p0stgr3s',
-  'dbname': 'mobkoi'
+  'password': 'password',
+  'dbname': 'mobkoi',
 }
 
 strategies = [
