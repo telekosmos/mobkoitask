@@ -20,5 +20,5 @@ def persist_binance_tickers(conn, rows):
   """
   with conn:
     with conn.cursor() as cur:
-      for row in rows[1:12]:
+      for row in rows:
         cur.execute(stmt, row)
