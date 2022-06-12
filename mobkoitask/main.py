@@ -17,6 +17,7 @@ def process_etl():
     return output_filename
 
   def process_etl_strategies(file_suffix):
+    print(f"Connecting to postgres with credentials {db_config}...")
     conn = pg.get_connection(db_config['host'], db_config['user'], db_config['password'], db_config['dbname'])
     for strategy in strategies:
       resp = requests.get(strategy['url'])
@@ -38,12 +39,12 @@ def process_etl():
   try:
     file_suffix = datetime.utcnow().strftime('%Y%m%d%H%M%S')
     process_etl_strategies(file_suffix)
-  except OperationalError:
-    print(f'Could not connect to database: {db_config}')
+  except OperationalError as e:
+    print(f'Could not connect to database: {db_config} -> {e}')
   except Error as pg_ex:
     print(f'Database error: {pg_ex.diag.message_detail}')
   except requests.RequestException as req_ex:
-    print(f'HTTP request error - URL: {strategy["url"]}')
+    print(f'HTTP request error - URL: {req_ex.errno}')
 
-
+print("Staring process ETL...")
 process_etl()
