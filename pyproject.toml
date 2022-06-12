@@ -7,7 +7,7 @@ authors = ["telekosmos"]
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.28.0"
-psycopg-binary = "^3.0.14"
+psycopg2-binary = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
