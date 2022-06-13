@@ -7,7 +7,6 @@ services:
     restart: on-failure
     depends_on:
       - postgresql
-
     volumes:
       - ./out:/app/out
 
