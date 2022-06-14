@@ -37,7 +37,7 @@ This will generate two containers, one for the application and other for a postg
 The application container (named _mobkoitask_) will run the ETLs and will save the files in a folder named `./out`, just in the application folder. After running, check folders `./out/binance` and `./out/exchange-rates` for the files
 
 The container with postgres remains running and we can check the contents by connecting to the port **5434**, database `mobkoi` with user/password `postgres:password` (or `docker exec -i -t mobkoi-task_postgresql_1 /bin/bash` then `psql -U postgres -d mobkoi` inside de container) and querying tables:
-- `select * from exchange_rates -- limit 12;
+- `select * from exchange_rates -- limit 12;`
 - `select * from binance_tickers -- limit 12;`
 
-To stop and remove the containers do `docker-compose down` from the application folder.
+To stop and remove the containers do `docker-compose down` from the application folder. The files will remain but the database (no _volume_ mapped to the host) will be wiped out.
