@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  mobkoitask:
+    container_name: "mobkoitask"
+    build: .
+    restart: on-failure
+    depends_on:
+      - postgresql
+    volumes:
+      - ./out:/app/out
+
+  postgresql:
+    image: postgres:9.5-alpine
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
