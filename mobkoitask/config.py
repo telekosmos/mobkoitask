@@ -26,6 +26,7 @@ db_config = {
   'user': 'postgres',
   'password': 'password',
   'dbname': 'mobkoi',
+  'connection_retries': 3
 }
 
 strategies = [
