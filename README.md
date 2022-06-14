@@ -17,11 +17,11 @@ Sort of simple ETL example:
 
 ## Limitations
 For the current approach:
-- If more than one request to the Exchange Rates API is done within 24 hours is done, multiple files will be generated with different names due to the suffix and, if reprocessing, they will replicate similar rows.
+- If more than one request to the Exchange Rates API is done within 24 hours is done, multiple files will be generated with different names due to the suffix and, if reprocessing, they will replicate similar rows
 - Configuration could be external to the application: now if we want to change the configuration, we have to redeploy everything
 - Configuration also could be migrated to use classes, which provide better IDE support and decrease the chance of errors in runtime than using strings as keys for the strategy pattern chosen
-- More tests could be in place, especially for the main function, by mocking both file storage and db (or their supporting functions)
-- Debug and improve DevOps to completely separated from the code (-> this is a bit embarrassing)
+- More tests could be in place, especially for the main function, by mocking both file storage and db (or their supporting functions) and also for some unhappy paths (no connection to db or requests errors)
+- Debug and improve DevOps to be completely separated from the code (-> this is a bit embarrassing)
 
 ## Error checks
 - HTTP request error, both if server provides a non 200 status code or there is some _operational_ request error
@@ -36,7 +36,7 @@ This will generate two containers, one for the application and other for a postg
 
 The application container (named _mobkoitask_) will run the ETLs and will save the files in a folder named `./out`, just in the application folder. After running, check folders `./out/binance` and `./out/exchange-rates` for the files
 
-The container with postgres remains running and we can check the contents by connecting to the port **5434**, database `mobkoi` with user/password `postgres:password` and querying tables:
+The container with postgres remains running and we can check the contents by connecting to the port **5434**, database `mobkoi` with user/password `postgres:password` (or `docker exec -i -t mobkoi-task_postgresql_1 /bin/bash` then `psql -U postgres -d mobkoi` inside de container) and querying tables:
 - `select * from exchange_rates -- limit 12;
 - `select * from binance_tickers -- limit 12;`
 
