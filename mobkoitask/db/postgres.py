@@ -1,7 +1,20 @@
 import psycopg2
 
-def get_connection(host='localhost', user='postgres', password='p0stgr3s', dbname='mobkoi'):
-  return psycopg2.connect(host=host, user=user, password=password, dbname=dbname)
+def get_connection(host='localhost', user='postgres', password='p0stgr3s', dbname='mobkoi', retries=3):
+  conn = None
+  retry_counter = 0
+  while retry_counter < retries:
+    try:
+      conn = psycopg2.connect(host=host, user=user, password=password, dbname=dbname)
+    except psycopg2.OperationalError:
+      continue
+    break;
+
+  if retry_counter == retries:
+    raise psycopg2.OperationalError
+  else:
+    return conn
+
 
 def persist_exchange_rates(conn, rows):
   stmt = """
