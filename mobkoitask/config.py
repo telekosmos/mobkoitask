@@ -14,14 +14,6 @@ StrategiesConfig = namedtuple('StrategiesConfig', [
 	'persist_func'
 ])
 
-DBConfig = namedtuple('DBConfig', [
-	'host',
-	'user',
-	'password',
-	'dbname',
-	'connection_retries'
-])
-
 exchange_rates_config_etl = StrategiesConfig(
 	'https://open.er-api.com/v6/latest/CHF',
 	'./out/exchange_rates',
@@ -38,12 +30,19 @@ etl_binance_config = StrategiesConfig(
 	transformations.transform_binance_tickers,
 	pg.persist_binance_tickers
 )
-
 etl_strategies = [exchange_rates_config_etl, etl_binance_config]
-config_db = DBConfig(
+
+DBConfig = namedtuple('DBConfig', [
+	'host',
+	'user',
+	'password',
+	'dbname',
+	'connection_retries'
+])
+db_config = DBConfig(
 	'postgresql',
 	'postgres',
-	'password',
+	'p0stgr3s', # 'password',
 	'mobkoi',
 	3
 )

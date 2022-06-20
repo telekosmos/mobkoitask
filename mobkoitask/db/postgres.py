@@ -7,6 +7,7 @@ def get_connection(host='localhost', user='postgres', password='p0stgr3s', dbnam
     try:
       conn = psycopg2.connect(host=host, user=user, password=password, dbname=dbname)
     except psycopg2.OperationalError:
+      print(f"retry {retry_counter}")
       retry_counter += 1
       continue
     break;
