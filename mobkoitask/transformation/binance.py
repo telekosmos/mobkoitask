@@ -1,10 +1,8 @@
 from datetime import datetime
-import calendar
+import json
 
-def transform(resp):
-  json_resp = resp.json()
-  # utcnow = datetime.utcnow()
-  # utc_time = calendar.timegm(utcnow.timetuple())
+def transform(resp_data):
+  json_resp = json.loads(resp_data)
   rows = [ (elem['symbol'], elem['price']) for elem in json_resp ]
 
   return rows

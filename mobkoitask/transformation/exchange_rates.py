@@ -1,6 +1,7 @@
+import json
 
-def transform(resp):
-  json_resp = resp.json()
+def transform(resp_data):
+  json_resp = json.loads(resp_data)
   base_code = json_resp['base_code']
   utc_update = json_resp['time_last_update_utc']
   long_update = json_resp['time_last_update_unix']
