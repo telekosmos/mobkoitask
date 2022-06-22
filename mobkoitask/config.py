@@ -1,9 +1,9 @@
 
 from collections import namedtuple
 
-import storage.local as local_storage
-import db.postgres as pg
-import transformation.index as transformations
+import mobkoitask.storage.local as local_storage
+import mobkoitask.db.postgres as pg
+import mobkoitask.transformation.index as transformations
 
 StrategiesConfig = namedtuple('StrategiesConfig', [
 	'url',
