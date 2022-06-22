@@ -1,4 +1,5 @@
 import psycopg2
+import time
 
 def get_connection(host='localhost', user='postgres', password='p0stgr3s', dbname='mobkoi', retries=3):
   conn = None
@@ -7,6 +8,8 @@ def get_connection(host='localhost', user='postgres', password='p0stgr3s', dbnam
     try:
       conn = psycopg2.connect(host=host, user=user, password=password, dbname=dbname)
     except psycopg2.OperationalError:
+      print(f"Retrying connection to db: {retry_counter}")
+      time.sleep(3)
       retry_counter += 1
       continue
     break;
