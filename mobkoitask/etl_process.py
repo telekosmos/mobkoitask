@@ -4,7 +4,6 @@ import requests
 from psycopg2 import OperationalError, Error
 
 import mobkoitask.db.postgres as pg
-# from mobkoitask.config import db_config, etl_strategies
 
 def get_api_data(url):
   r = requests.get(url)
